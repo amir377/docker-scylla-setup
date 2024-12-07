@@ -1,0 +1,23 @@
+services:
+  scylla:
+    image: scylladb/scylla:latest
+    container_name: ${CONTAINER_NAME}
+    environment:
+      SCYLLA_USER: ${SCYLLA_USER}
+      SCYLLA_PASSWORD: ${SCYLLA_PASSWORD}
+    volumes:
+      - scylla-data:/var/lib/scylla
+      - scylla-logs:/var/log/scylla
+    ports:
+      - "${ALLOW_HOST}:${SCYLLA_CQL_PORT}:9042"
+      - "${ALLOW_HOST}:${SCYLLA_REST_PORT}:9180"
+    networks:
+      - ${NETWORK_NAME}
+
+volumes:
+  scylla-data:
+  scylla-logs:
+
+networks:
+  ${NETWORK_NAME}:
+    external: true
